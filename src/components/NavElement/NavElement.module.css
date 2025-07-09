@@ -1,0 +1,33 @@
+.listItem {
+	gap: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.navLink {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 1rem;
+	gap: 1rem;
+	color: var(--font-color-primary);
+	border-radius: 4px;
+}
+
+.listItem:focus-visible,
+.listItem:active,
+.listItem:focus,
+.listItem:hover .navLink {
+	background-color: #007aff;
+}
+
+.navLink:hover {
+	color: var(--font-color-secondary);
+}
+.active {
+	background-color: #007aff;
+	color: var(--font-color-secondary);
+}
+.active .navLink {
+	color: var(--font-color-secondary);
+}
