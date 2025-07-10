@@ -5,4 +5,13 @@
 	color: var(--font-color-secondary);
 	border: none;
 	border-radius: 4px;
+	cursor: pointer;
+}
+
+.button:hover {
+	filter: brightness(1.1);
+}
+
+.button:active {
+	filter: brightness(0.9);
 }
