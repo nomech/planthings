@@ -1,4 +1,5 @@
 import styles from './TodoDetails.module.css';
+import { Plus, Eraser } from 'lucide-react';
 
 export const TodoDetails = () => {
 	return (
@@ -10,6 +11,14 @@ export const TodoDetails = () => {
 			<div className={styles.inputGroup}>
 				<label htmlFor="name">Description</label>
 				<input type="text" name="description" />
+			</div>
+			<div className={styles.buttonContaoner}>
+				<button className={styles.addButton}>
+					<Plus /> Add
+				</button>
+				<button className={styles.clearButton}>
+					<Eraser /> Clear
+				</button>
 			</div>
 		</div>
 	);

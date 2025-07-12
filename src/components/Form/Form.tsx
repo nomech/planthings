@@ -1,14 +1,20 @@
 import styles from './Form.module.css';
 import ListTitle from '../ListTitle/ListTitle';
 import { TodoDetails } from '../TodoDetails/TodoDetails';
+import type { FormEventHandler } from 'react';
 
-const Form = () => {
+type Props = {
+	handleOnSubmit: FormEventHandler<HTMLFormElement>;
+};
+
+const Form = ({ handleOnSubmit }: Props) => {
 	return (
-		<form className={styles.form}>
-			<ListTitle title="" />
-			<TodoDetails />
-			<div></div>
-		</form>
+		<div className={styles.formContainer}>
+			<form className={styles.form} onSubmit={handleOnSubmit}>
+				<ListTitle title="" />
+				<TodoDetails />
+			</form>
+		</div>
 	);
 };
 
