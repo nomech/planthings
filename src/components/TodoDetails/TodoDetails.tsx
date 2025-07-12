@@ -10,14 +10,22 @@ export const TodoDetails = () => {
 			</div>
 			<div className={styles.inputGroup}>
 				<label htmlFor="name">Description</label>
-				<input type="text" name="description" />
+				<textarea name="description" />
 			</div>
-			<div className={styles.buttonContaoner}>
+			<div className={styles.inputGroup}>
+				<select name="category" id="category">
+					<option value="1">Test</option>
+					<option value="2">Test 2</option>
+					<option value="3">Test 3</option>
+					<option value="4">Test 4</option>
+				</select>
+			</div>
+			<div className={styles.buttonContainer}>
 				<button className={styles.addButton}>
-					<Plus /> Add
+					<Plus color="#fff" /> Add
 				</button>
 				<button className={styles.clearButton}>
-					<Eraser /> Clear
+					<Eraser color="#fff" /> Clear
 				</button>
 			</div>
 		</div>

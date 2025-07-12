@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-    gap: 2rem;
+	gap: 2rem;
 	width: 100%;
 	padding: 1rem;
 	border-radius: 8px;
@@ -14,4 +14,45 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
+}
+
+.inputGroup input,
+.inputGroup textarea,
+.inputGroup select {
+	background-color: transparent;
+	border: 1px solid var(--font-color-primary);
+}
+
+.buttonContainer {
+	display: flex;
+	gap: 1rem;
+}
+
+.addButton,
+.clearButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	background-color: #0086ff;
+	color: #fff;
+	width: 110px;
+	height: 40px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.clearButton {
+	background-color: #545b62;
+}
+
+.addButton:hover,
+.clearButton:hover {
+	filter: brightness(1.1);
+}
+
+.addButton:active,
+.clearButton:active {
+	filter: brightness(0.9);
 }
