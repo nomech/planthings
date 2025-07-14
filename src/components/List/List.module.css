@@ -1,0 +1,17 @@
+.listContainer {
+	display: flex;
+	width: 70%;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 2rem;
+	width: 100%;
+	padding: 1rem;
+	border-radius: 8px;
+	background: #fff;
+	box-shadow: 0px 4px 20px 0.1px rgba(0, 0, 0, 0.25);
+	margin: 0 6rem;
+}

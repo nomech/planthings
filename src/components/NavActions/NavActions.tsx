@@ -11,7 +11,6 @@ const NavActions = () => {
 	const location = useLocation();
 
 	const isListPage = location.pathname.split('/').filter((path) => path != '')[0] === 'lists';
-	console.log(isListPage);
 
 	return (
 		<div>
