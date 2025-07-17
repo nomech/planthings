@@ -4,11 +4,37 @@ import { Plus, Eraser } from 'lucide-react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useInsertList } from '../../hooks/useList';
 
 type Props = {
 	handleOnSubmit: (formData: FormValues) => void;
 };
 
+const testList = {
+	name: 'Test List',
+	description: 'This is a test list description',
+	category: 1,
+};
+const testListItems = [
+	{
+		name: 'Test Item 1',
+		description: 'This is a test item description',
+		completed: false,
+		completed_at: null,
+	},
+	{
+		name: 'Test Item 2',
+		description: 'This is another test item description',
+		completed: false,
+		completed_at: null,
+	},
+	{
+		name: 'Test Item 3',
+		description: 'This is yet another test item description',
+		completed: false,
+		completed_at: null,
+	},
+];
 /* type FormValues = {
 	name: string;
 	description: string;
@@ -34,6 +60,8 @@ const Form = ({ handleOnSubmit }: Props) => {
 		category: 0,
 	};
 
+	const { insertList } = useInsertList();
+
 	const { register, handleSubmit } = useForm<FormValues>({
 		defaultValues: defaultValues,
 		resolver: zodResolver(schema),
@@ -41,6 +69,7 @@ const Form = ({ handleOnSubmit }: Props) => {
 
 	const onSubmit = (formDataToSubmit: FormValues) => {
 		handleOnSubmit(formDataToSubmit);
+		insertList(testList, testListItems);
 	};
 	return (
 		<>

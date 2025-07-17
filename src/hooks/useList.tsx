@@ -6,9 +6,15 @@ const supabaseKey = import.meta.env.VITE_KEY;
 const supabase = createClient(supaBaseUrl, supabaseKey);
 
 interface List {
-	id: string;
 	name: string;
 	description: string;
+}
+
+interface ListItem {
+	name: string;
+	description: string;
+	completed: boolean;
+	completed_at: string | null;
 }
 
 export const useLists = () => {
@@ -66,28 +72,36 @@ export const useGetListItems = (id: number) => {
 	return { lists, loading, dbError };
 };
 
-export const useInsertList = (listToInsert: string[], listItemsToInsert: string[]) => {
-	const [lists, setLists] = useState<List[]>([]);
+export const useInsertList = () => {
 	const [loading, setLoading] = useState(false);
 	const [dbError, setDbError] = useState('');
 
-	useEffect(() => {
-		const insertList = async () => {
-			setLoading(true);
-			const { data: newList, error } = await supabase
-				.from('lists')
-				.insert([{ listToInsert }])
-				.select();
+	const insertList = async (listToInsert: List, listItemsToInsert: ListItem[]) => {
+		setLoading(true);
+		const { data: newList, error: listError } = await supabase
+			.from('lists')
+			.insert([{ listToInsert }])
+			.select();
 
-				console.log(newList)
+		const newListId = newList?.[0]?.id;
 
-			const listId: number = newList[0].id;
+		if (!listError) {
+			const listItemsWithId = listItemsToInsert.map((item) => ({
+				...item,
+				list_id: newListId,
+			}));
 
-			if (!error) {
-				const { error } = await supabase.from('list_items').insert(listItemsToInsert);
+			const { error: listItemError } = await supabase
+				.from('list_items')
+				.insert(listItemsWithId);
+			if (listItemError) {
+				setDbError(listItemError.message);
 			}
-			setLoading(false);
-		};
-		insertList();
-	});
+		} else {
+			setDbError(listError.message);
+		}
+		setLoading(false);
+	};
+
+	return { insertList, loading, dbError };
 };
