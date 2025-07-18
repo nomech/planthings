@@ -6,15 +6,10 @@ const supabaseKey = import.meta.env.VITE_KEY;
 const supabase = createClient(supaBaseUrl, supabaseKey);
 
 interface List {
-	name: string;
+	title: string;
 	description: string;
-}
-
-interface ListItem {
-	name: string;
-	description: string;
-	completed: boolean;
-	completed_at: string | null;
+	category: number;
+	listItems: [];
 }
 
 export const useLists = () => {
@@ -24,6 +19,7 @@ export const useLists = () => {
 
 	useEffect(() => {
 		const getLists = async () => {
+			/* 
 			setLoading(true);
 			let { data, error } = await supabase
 				.from('lists')
@@ -35,6 +31,11 @@ export const useLists = () => {
 			if (error) {
 				setDbError(error.message);
 			}
+			setLoading(false); */
+
+			setLoading(true);
+			const listData = JSON.parse(localStorage.getItem('lists') || '""');
+			setLists(listData);
 			setLoading(false);
 		};
 
@@ -73,12 +74,15 @@ export const useGetListItems = (id: number) => {
 };
 
 export const useInsertList = () => {
-	const [loading, setLoading] = useState(false);
-	const [dbError, setDbError] = useState('');
+	const insertList = async (listToInsert: List) => {
+		//setLoading(true);
+		const currentLocalStorage = JSON.parse(localStorage.getItem('lists') || '[]');
 
-	const insertList = async (listToInsert: List, listItemsToInsert: ListItem[]) => {
-		setLoading(true);
-		const { data: newList, error: listError } = await supabase
+		if (currentLocalStorage) {
+			localStorage.setItem('lists', JSON.stringify([...currentLocalStorage, listToInsert]));
+		}
+
+		/* 		const { data: newList, error: listError } = await supabase
 			.from('lists')
 			.insert([{ listToInsert }])
 			.select();
@@ -99,9 +103,16 @@ export const useInsertList = () => {
 			}
 		} else {
 			setDbError(listError.message);
-		}
-		setLoading(false);
+		} */
+		//setLoading(false);
 	};
 
-	return { insertList, loading, dbError };
+	return { insertList };
+};
+
+export const useGetListDetails = () => {
+	useEffect(() => {
+		const listData = JSON.parse(localStorage.getItem('lists') || '""');
+		console.log(listData);
+	});
 };

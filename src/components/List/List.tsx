@@ -1,20 +1,23 @@
 import styles from './List.module.css';
-type Props = {
+
+type TodoFormData = {
 	data: {
-		name: string;
+		title: string;
 		description: string;
 		category: number;
+		task: string;
+		details: string;
 	}[];
 };
 
-const List = ({ data }: Props) => {
+const List = ({ data }: TodoFormData) => {
 	return (
 		<div className={styles.listContainer}>
 			<div className={styles.list}>
 				<h2>Todo's</h2>
 				<hr />
 				{data.length == 0 && <p>There are currently no items in the list</p>}
-				<ul>{data && data.map((todo, index) => <li key={index}>{todo.name}</li>)}</ul>
+				<ul>{data && data.map((todo, index) => <li key={index}>{todo.task}</li>)}</ul>
 			</div>
 		</div>
 	);

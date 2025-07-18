@@ -4,37 +4,13 @@ import { Plus, Eraser } from 'lucide-react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useInsertList } from '../../hooks/useList';
+import { useEffect } from 'react';
+//import { useInsertList } from '../../hooks/useList';
 
 type Props = {
 	handleOnSubmit: (formData: FormValues) => void;
 };
 
-const testList = {
-	name: 'Test List',
-	description: 'This is a test list description',
-	category: 1,
-};
-const testListItems = [
-	{
-		name: 'Test Item 1',
-		description: 'This is a test item description',
-		completed: false,
-		completed_at: null,
-	},
-	{
-		name: 'Test Item 2',
-		description: 'This is another test item description',
-		completed: false,
-		completed_at: null,
-	},
-	{
-		name: 'Test Item 3',
-		description: 'This is yet another test item description',
-		completed: false,
-		completed_at: null,
-	},
-];
 /* type FormValues = {
 	name: string;
 	description: string;
@@ -48,39 +24,55 @@ type FormValues = z.infer<typeof schema>;
 // It uses React Hook Form for form handling and Zod for validation.
 
 const schema = z.object({
-	name: z.string().min(1, 'Project name is required'),
-	description: z.string().min(10).max(500),
+	title: z.string().min(1, 'List titel is required').max(40),
+	description: z.string().min(10).max(2000),
+	task: z.string().min(1, 'Task name is required'),
+	details: z.string().min(10).max(2000),
 	category: z.number(),
 });
 
 const Form = ({ handleOnSubmit }: Props) => {
 	const defaultValues: FormValues = {
-		name: '',
+		title: '',
 		description: '',
+		task: '',
+		details: '',
 		category: 0,
 	};
 
-	const { insertList } = useInsertList();
+	//const { insertList } = useInsertList();
 
-	const { register, handleSubmit } = useForm<FormValues>({
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { isSubmitSuccessful },
+	} = useForm<FormValues>({
 		defaultValues: defaultValues,
 		resolver: zodResolver(schema),
 	});
 
+	useEffect(() => {
+		reset({ task: '', details: '' });
+	}, [isSubmitSuccessful]);
+
 	const onSubmit = (formDataToSubmit: FormValues) => {
+		console.log(formDataToSubmit);
 		handleOnSubmit(formDataToSubmit);
-		insertList(testList, testListItems);
+		//insertList(testList, testListItems);
 	};
+
 	return (
 		<>
 			<div className={styles.formContainer}>
 				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-					<ListTitle title="" />
-					<div className={styles.todoContainer}>
-						<div className={styles.inputGroup}>
-							<label htmlFor="name">Name</label>
-							<input {...register('name')} type="text" id="name" name="name" />
-						</div>
+					<div className={styles.titleContainer}>
+						<input
+							className={styles.title}
+							{...register('title')}
+							type="text"
+							placeholder="List name"
+						/>
 						<div className={styles.inputGroup}>
 							<label htmlFor="description">Description</label>
 							<textarea
@@ -89,6 +81,7 @@ const Form = ({ handleOnSubmit }: Props) => {
 								name="description"
 							/>
 						</div>
+
 						<div className={styles.inputGroup}>
 							<select
 								{...register('category', { valueAsNumber: true })}
@@ -103,6 +96,18 @@ const Form = ({ handleOnSubmit }: Props) => {
 								<option value={4}>Test 4</option>
 							</select>
 						</div>
+					</div>
+
+					<div className={styles.todoContainer}>
+						<div className={styles.inputGroup}>
+							<label htmlFor="task">Task name</label>
+							<input {...register('task')} type="text" id="task" name="task" />
+						</div>
+						<div className={styles.inputGroup}>
+							<label htmlFor="details">Task details</label>
+							<textarea {...register('details')} id="details" name="details" />
+						</div>
+
 						<div className={styles.buttonContainer}>
 							<button className={styles.addButton}>
 								<Plus color="#fff" /> Add

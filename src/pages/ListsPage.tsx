@@ -1,13 +1,12 @@
-import { useLists, useGetListItems } from '../hooks/useList';
+import { useLists, useInsertList } from '../hooks/useList';
 
 const ListsPage = () => {
 	const { lists, loading, dbError } = useLists();
-	console.log(lists);
 
 	return (
 		<div>
 			{dbError && <p>{dbError}</p>}
-			{lists && lists.map((list) => <p key={list.id}>{list.name}</p>)}
+			{lists && lists.map((list, index) => <p key={index}>{list.title}</p>)}
 		</div>
 	);
 };
